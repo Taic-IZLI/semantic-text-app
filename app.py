@@ -31,7 +31,7 @@ text1 = st.text_area("Текст 1", height=150)
 text2 = st.text_area("Текст 2", height=150)
 
 # Модель
-model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+model = SentenceTransformer('paraphrase-MiniLM-L12-v2')
 
 # Кнопка сравнения
 if st.button("🚀 Сравнить тексты"):
