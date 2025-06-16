@@ -1,39 +1,42 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer, util
-import numpy as np
 
-# Стили
-st.set_page_config(page_title="Сравнение текстов", layout="wide")
+# Загружаем улучшенную модель
+model = SentenceTransformer('paraphrase-MiniLM-L12-v2')
+
+st.set_page_config(page_title="Сравнение смыслов", layout="wide")
+
+# Стили + JS
 with open("styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Заголовок и инструкция
-st.markdown("<h1 class='main-title'>🔍 Смысловое сравнение текстов</h1>", unsafe_allow_html=True)
+st.markdown("""
+<canvas id="background"></canvas>
+<script src="assets/background.js"></script>
+<script src="assets/sidebar.js"></script>
+""", unsafe_allow_html=True)
+
+# Шапка
+st.markdown("<h1 class='main-title'>💡 Сравнение смыслов между текстами</h1>", unsafe_allow_html=True)
+
+# Инструкция
 st.markdown("""
 <div class='instructions'>
-<b>Как использовать:</b>
-<ul>
-<li>Введите два текста</li>
-<li>Нажмите "Сравнить"</li>
-<li>Вы увидите процент сходства по смыслу</li>
-</ul>
+<b>Как пользоваться:</b><br>
+1. Введите два текста или предложения<br>
+2. Нажмите кнопку сравнения<br>
+3. Получите процент сходства и вывод — идентичны или нет<br>
 </div>
 """, unsafe_allow_html=True)
 
-# Фон
-st.markdown("""
-<script src="assets/background.js"></script>
-<canvas id="background"></canvas>
-""", unsafe_allow_html=True)
+# Ввод текстов
+col1, col2 = st.columns(2)
+with col1:
+    text1 = st.text_area("Текст 1", height=200)
+with col2:
+    text2 = st.text_area("Текст 2", height=200)
 
-# Ввод текста
-text1 = st.text_area("Текст 1", height=150)
-text2 = st.text_area("Текст 2", height=150)
-
-# Модель
-model = SentenceTransformer('paraphrase-MiniLM-L12-v2')
-
-# Кнопка сравнения
+# Кнопка и результат
 if st.button("🚀 Сравнить тексты"):
     if text1 and text2:
         emb1 = model.encode(text1, convert_to_tensor=True)
@@ -55,4 +58,4 @@ if st.button("🚀 Сравнить тексты"):
         </div>
         """, unsafe_allow_html=True)
     else:
-        st.warning("Введите оба текста для анализа.")
+        st.warning("⚠️ Введите оба текста для сравнения.")
