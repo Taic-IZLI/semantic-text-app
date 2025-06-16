@@ -6,5 +6,5 @@
 
 
 ## ☁️ Онлайн-версия
-Можно посмотреть тут [semantext]([https://share.streamlit.io](https://semantic-text-app-ujxnrmzjfcctgadibxfh8o.streamlit.app/))
+Можно посмотреть тут [semantext](https://semantic-text-app-ujxnrmzjfcctgadibxfh8o.streamlit.app/)
 
