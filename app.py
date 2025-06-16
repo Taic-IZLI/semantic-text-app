@@ -34,12 +34,25 @@ text2 = st.text_area("Текст 2", height=150)
 model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
 # Кнопка сравнения
-if st.button("Сравнить"):
+if st.button("🚀 Сравнить тексты"):
     if text1 and text2:
         emb1 = model.encode(text1, convert_to_tensor=True)
         emb2 = model.encode(text2, convert_to_tensor=True)
         similarity = util.pytorch_cos_sim(emb1, emb2).item()
         percent = round(similarity * 100, 2)
-        st.success(f"🔗 Сходство: {percent}%")
+
+        if percent > 90:
+            verdict = "🟢 Идентичны по смыслу"
+        elif percent > 60:
+            verdict = "🟡 Похожи по смыслу"
+        else:
+            verdict = "🔴 Отличаются по смыслу"
+
+        st.markdown(f"""
+        <div class='result-box'>
+            <h2>{verdict}</h2>
+            <p><b>Сходство по смыслу:</b> {percent}%</p>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.warning("Пожалуйста, введите оба текста.")
+        st.warning("Введите оба текста для анализа.")
