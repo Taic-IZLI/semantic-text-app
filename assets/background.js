@@ -1,47 +1,34 @@
 const canvas = document.getElementById("background");
 const ctx = canvas.getContext("2d");
 
-let width, height;
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
 
-let dots = Array.from({ length: 100 }, () => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    vx: Math.random() - 0.5,
-    vy: Math.random() - 0.5,
-}));
+let matrix = "01";
+matrix = matrix.split("");
+
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+
+let drops = Array(Math.floor(columns)).fill(1);
 
 function draw() {
-    ctx.clearRect(0, 0, width, height);
-    for (let dot of dots) {
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-        if (dot.x < 0 || dot.x > width) dot.vx *= -1;
-        if (dot.y < 0 || dot.y > height) dot.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff88";
-        ctx.fill();
-    }
-    for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-            let dx = dots[i].x - dots[j].x;
-            let dy = dots[i].y - dots[j].y;
-            let dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 100) {
-                ctx.beginPath();
-                ctx.moveTo(dots[i].x, dots[i].y);
-                ctx.lineTo(dots[j].x, dots[j].y);
-                ctx.strokeStyle = "#ffffff22";
-                ctx.stroke();
-            }
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        let text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
         }
+
+        drops[i]++;
     }
-    requestAnimationFrame(draw);
 }
-draw();
+
+setInterval(draw, 33);
