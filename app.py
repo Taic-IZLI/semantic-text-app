@@ -51,7 +51,7 @@ with st.container():
 # Загружаем модель
 @st.cache_resource
 def load_model():
-    return SentenceTransformer("DeepPavlov/rubert-base-cased-sentence")
+    return SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
 
 model = load_model()
 
