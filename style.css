@@ -48,3 +48,20 @@ textarea {
     .header h1 { font-size: 1.5rem; }
     .result-box { padding: 1rem; }
 }
+.neon-label {
+    font-size: 20px;
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+/* Эффект "пульсации" свечения */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+    }
+    to {
+        text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+}
