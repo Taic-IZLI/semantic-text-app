@@ -5,37 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 st.set_page_config(page_title="Смысловое сравнение текстов", layout="wide")
 
-# 🔹 Фон с анимацией
-st.markdown('''
-<style>
-.svg-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  opacity: 0.3;
-}
-</style>
-
-<div class="svg-background">
-  <svg width="100%" height="100%">
-    <defs>
-      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#3c67e3;stop-opacity:1" />
-      </linearGradient>
-    </defs>
-    <rect x="0" y="0" width="100%" height="100%" fill="url(#grad)">
-      <animate attributeName="x" values="0;100;0" dur="15s" repeatCount="indefinite" />
-    </rect>
-  </svg>
-</div>
-''', unsafe_allow_html=True)
-
-
-# 🔹 Загрузка модели
+# Загрузка модели
 @st.cache_resource
 def load_model():
     tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/rubert-base-cased-sentence")
@@ -44,32 +14,19 @@ def load_model():
 
 tokenizer, model = load_model()
 
+# Функция для получения эмбеддинга
 def get_embedding(text):
-    inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=128)
+    inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True)
     with torch.no_grad():
         outputs = model(**inputs)
     embeddings = outputs.last_hidden_state[:, 0, :].numpy()
     return embeddings
 
-# 🔹 Стили
+# Подключение стилей
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# 🔹 Боковая панель-инструкция
-with st.sidebar:
-    st.markdown("""
-    <div class="side-panel">
-        <h3>ℹ️ Как пользоваться</h3>
-        <ul>
-            <li>Введите два текста</li>
-            <li>Нажмите «Сравнить тексты»</li>
-            <li>Система покажет процент смысловой схожести</li>
-        </ul>
-        <p style='color:#aaa;'>Модель использует нейросети для сравнения смысла фраз.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# 🔹 Заголовок
+# Интерфейс
 st.markdown("""
 <div class="header">
     <h1>🔍 Сравнение смыслов</h1>
@@ -77,7 +34,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 🔹 Поля ввода
 col1, col2 = st.columns(2)
 
 with col1:
@@ -88,19 +44,20 @@ with col2:
     st.markdown("<div class='neon-label'>📄 Второй текст</div>", unsafe_allow_html=True)
     text2 = st.text_area("", height=200, placeholder="Введите второй текст...")
 
-# 🔹 Обработка и результат
+
 if st.button("🚀 Сравнить тексты"):
     if text1 and text2:
         emb1 = get_embedding(text1)
         emb2 = get_embedding(text2)
         similarity = cosine_similarity(emb1, emb2)[0][0]
-        percent = similarity * 100
+        percent = round(similarity * 100, 2)
 
         st.markdown(f"""
         <div class="result-box">
             <h2>🧠 Результат:</h2>
-            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span></p>
+            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span>
         </div>
         """, unsafe_allow_html=True)
+
     else:
         st.warning("Пожалуйста, введите оба текста.")
