@@ -1,79 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
-body {
-    background-color: #0d0d0d;
-    font-family: 'Orbitron', sans-serif;
-    color: #00ffff;
-    margin: 0;
-    padding-top: 60px;
-}
-
-.main-title {
-    font-size: 38px;
-    text-align: center;
-    padding: 20px 10px;
-    color: #00ffff;
-    letter-spacing: 2px;
-    text-shadow: 0 0 15px #00ffff;
-}
-
-.neon-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 2px solid #00ffff;
-    border-radius: 20px;
-    padding: 30px;
-    margin: auto;
-    max-width: 900px;
-    box-shadow: 0 0 25px #00ffff;
-    backdrop-filter: blur(10px);
-}
-
-button[kind="primary"] {
-    background-color: #00ffff !important;
-    color: #000 !important;
-    font-weight: bold;
-    padding: 12px 24px;
-    font-size: 18px;
-    border-radius: 8px;
+/* --- Боковая навигация --- */
+.side-nav {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-right: 2px solid #0ff;
+    padding: 15px 10px;
+    gap: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 15px #0ff;
     transition: all 0.3s ease-in-out;
 }
 
-button[kind="primary"]:hover {
-    background-color: #0ff;
-    box-shadow: 0 0 20px #0ff;
-    transform: scale(1.05);
-}
-
-textarea {
-    background-color: #111 !important;
-    color: #0ff !important;
-    border: 1px solid #0ff !important;
-    border-radius: 10px !important;
-}
-
-.sticky-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    border-bottom: 1px solid #0ff;
-    transition: top 0.3s;
-}
-
-.sticky-header a {
+.side-nav a {
     color: #0ff;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.2s;
+    font-size: 14px;
+    transition: 0.2s;
 }
 
-.sticky-header a:hover {
-    color: #fff;
+.side-nav a:hover {
+    color: white;
     text-shadow: 0 0 10px #0ff;
 }
