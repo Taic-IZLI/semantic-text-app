@@ -65,3 +65,18 @@ textarea {
         text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
     }
 }
+/* Боковая панель-инструкция */
+.side-panel {
+    color: #ffffff;
+    background: rgba(15, 15, 15, 0.85);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 10px #00ffff;
+    animation: slideIn 1.5s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
