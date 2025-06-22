@@ -55,7 +55,7 @@ if st.button("🚀 Сравнить тексты"):
         st.markdown(f"""
         <div class="result-box">
             <h2>🧠 Результат:</h2>
-            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent}%</span></p>
+            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span>
         </div>
         """, unsafe_allow_html=True)
 
