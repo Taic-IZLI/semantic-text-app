@@ -37,10 +37,13 @@ st.markdown("""
 col1, col2 = st.columns(2)
 
 with col1:
-    text1 = st.text_area("Первый текст", height=200, placeholder="Введите первый текст...")
+    st.markdown("<div class='neon-label'>📝 Первый текст</div>", unsafe_allow_html=True)
+    text1 = st.text_area("", height=200, placeholder="Введите первый текст...")
 
 with col2:
-    text2 = st.text_area("Второй текст", height=200, placeholder="Введите второй текст...")
+    st.markdown("<div class='neon-label'>📄 Второй текст</div>", unsafe_allow_html=True)
+    text2 = st.text_area("", height=200, placeholder="Введите второй текст...")
+
 
 if st.button("🚀 Сравнить тексты"):
     if text1 and text2:
