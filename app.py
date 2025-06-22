@@ -5,59 +5,26 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 st.set_page_config(page_title="Смысловое сравнение текстов", layout="wide")
 
-# Загрузка модели
-@st.cache_resource
-def load_model():
-    tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/rubert-base-cased-sentence")
-    model = AutoModel.from_pretrained("DeepPavlov/rubert-base-cased-sentence")
-    return tokenizer, model
-
-tokenizer, model = load_model()
-
-# Функция для получения эмбеддинга
-def get_embedding(text):
-    inputs = tokenizer(text, return_tensors='pt', truncation=True, padding=True)
-    with torch.no_grad():
-        outputs = model(**inputs)
-    embeddings = outputs.last_hidden_state[:, 0, :].numpy()
-    return embeddings
-
-# Подключение стилей
-with open("style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# Интерфейс
+# 🔹 Фон с анимацией
 st.markdown("""
-<div class="header">
-    <h1>🔍 Сравнение смыслов</h1>
-    <p>Сравни тексты и узнай, насколько они близки по смыслу</p>
-</div>
-""", unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("<div class='neon-label'>📝 Первый текст</div>", unsafe_allow_html=True)
-    text1 = st.text_area("", height=200, placeholder="Введите первый текст...")
-
-with col2:
-    st.markdown("<div class='neon-label'>📄 Второй текст</div>", unsafe_allow_html=True)
-    text2 = st.text_area("", height=200, placeholder="Введите второй текст...")
-
-
-if st.button("🚀 Сравнить тексты"):
-    if text1 and text2:
-        emb1 = get_embedding(text1)
-        emb2 = get_embedding(text2)
-        similarity = cosine_similarity(emb1, emb2)[0][0]
-        percent = round(similarity * 100, 2)
-
-        st.markdown(f"""
-        <div class="result-box">
-            <h2>🧠 Результат:</h2>
-            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span>
-        </div>
-        """, unsafe_allow_html=True)
-
-    else:
-        st.warning("Пожалуйста, введите оба текста.")
+<style>
+body {
+  background: #0f0f0f;
+  overflow: hidden;
+}
+#gradient-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0fffc1, #3c67e3, #0fffc1);
+  background-size: 600% 600%;
+  animation: gradient 15s ease infinite;
+  filter: blur(100px);
+  opacity: 0.3;
+}
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background
