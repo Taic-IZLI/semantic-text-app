@@ -26,7 +26,7 @@ def get_embedding(text):
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# ✅ Боковая панель-инструкция
+# Боковая панель-инструкция
 with st.sidebar:
     st.markdown("""
     <div class="side-panel">
