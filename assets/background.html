@@ -1,5 +1,7 @@
 <canvas id="canvas"></canvas>
-<div class="sticky-header" id="sticky-header">
+
+<!-- Боковое меню -->
+<div class="side-nav">
   <a href="#main-section">🔍 Сравнение</a>
   <a href="#instructions">📘 Подсказка</a>
   <a href="#examples">🧪 Примеры</a>
@@ -50,13 +52,6 @@
 
     requestAnimationFrame(draw);
   }
-  draw();
 
-  let prevScrollPos = window.pageYOffset;
-  const header = document.getElementById("sticky-header");
-  window.onscroll = function () {
-    const currentScrollPos = window.pageYOffset;
-    header.style.top = (prevScrollPos > currentScrollPos) ? "0" : "-70px";
-    prevScrollPos = currentScrollPos;
-  };
+  draw();
 </script>
