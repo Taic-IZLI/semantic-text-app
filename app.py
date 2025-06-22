@@ -8,27 +8,32 @@ st.set_page_config(page_title="Смысловое сравнение текст�
 # 🔹 Фон с анимацией
 st.markdown('''
 <style>
-.gradient-bg {
+.svg-background {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
-  background: linear-gradient(270deg, #0fffc1, #3c67e3, #0fffc1);
-  background-size: 600% 600%;
-  animation: moveBackground 20s ease infinite;
-  opacity: 0.15;
-}
-
-@keyframes moveBackground {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  opacity: 0.3;
 }
 </style>
-<div class="gradient-bg"></div>
+
+<div class="svg-background">
+  <svg width="100%" height="100%">
+    <defs>
+      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#3c67e3;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="100%" height="100%" fill="url(#grad)">
+      <animate attributeName="x" values="0;100;0" dur="15s" repeatCount="indefinite" />
+    </rect>
+  </svg>
+</div>
 ''', unsafe_allow_html=True)
+
 
 # 🔹 Загрузка модели
 @st.cache_resource
