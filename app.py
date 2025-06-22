@@ -31,4 +31,46 @@ with st.sidebar:
     <div class="side-panel">
         <h3>ℹ️ Как пользоваться</h3>
         <ul>
-            <li>Введите два текст
+            <li>Введите два текста</li>
+            <li>Нажмите «Сравнить тексты»</li>
+            <li>Система покажет процент смысловой схожести</li>
+        </ul>
+        <p style='color:#aaa;'>Модель использует нейросети для сравнения смысла фраз.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# 🔹 Заголовок
+st.markdown("""
+<div class="header">
+    <h1>🔍 Сравнение смыслов</h1>
+    <p>Сравни тексты и узнай, насколько они близки по смыслу</p>
+</div>
+""", unsafe_allow_html=True)
+
+# 🔹 Поля ввода
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("<div class='neon-label'>📝 Первый текст</div>", unsafe_allow_html=True)
+    text1 = st.text_area("", height=200, placeholder="Введите первый текст...")
+
+with col2:
+    st.markdown("<div class='neon-label'>📄 Второй текст</div>", unsafe_allow_html=True)
+    text2 = st.text_area("", height=200, placeholder="Введите второй текст...")
+
+# 🔹 Обработка и результат
+if st.button("🚀 Сравнить тексты"):
+    if text1 and text2:
+        emb1 = get_embedding(text1)
+        emb2 = get_embedding(text2)
+        similarity = cosine_similarity(emb1, emb2)[0][0]
+        percent = similarity * 100
+
+        st.markdown(f"""
+        <div class="result-box">
+            <h2>🧠 Результат:</h2>
+            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span></p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.warning("Пожалуйста, введите оба текста.")
