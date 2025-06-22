@@ -26,6 +26,20 @@ def get_embedding(text):
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# ✅ Боковая панель-инструкция
+with st.sidebar:
+    st.markdown("""
+    <div class="side-panel">
+        <h3>ℹ️ Как пользоваться</h3>
+        <ul>
+            <li>Введите два текста</li>
+            <li>Нажмите «Сравнить тексты»</li>
+            <li>Узнайте процент смысловой схожести</li>
+        </ul>
+        <p style='color:#aaa;'>Модель использует нейросети для сравнения смыслов.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 # Интерфейс
 st.markdown("""
 <div class="header">
@@ -44,7 +58,6 @@ with col2:
     st.markdown("<div class='neon-label'>📄 Второй текст</div>", unsafe_allow_html=True)
     text2 = st.text_area("", height=200, placeholder="Введите второй текст...")
 
-
 if st.button("🚀 Сравнить тексты"):
     if text1 and text2:
         emb1 = get_embedding(text1)
@@ -55,9 +68,8 @@ if st.button("🚀 Сравнить тексты"):
         st.markdown(f"""
         <div class="result-box">
             <h2>🧠 Результат:</h2>
-            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span>
+            <p>Смысловая схожесть: <span style='color: #00ffcc; font-size: 24px;'>{percent:.2f}%</span></p>
         </div>
         """, unsafe_allow_html=True)
-
     else:
         st.warning("Пожалуйста, введите оба текста.")
